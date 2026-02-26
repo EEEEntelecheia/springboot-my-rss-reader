@@ -68,7 +68,7 @@
         SELECT COUNT(*) FROM articles
     </select>
 
-    <select id="countAll" resultType="long">
+    <select id="existsByLink" resultType="long">
         SELECT COUNT(*) FROM articles
         WHERE link = #{link}
     </select>

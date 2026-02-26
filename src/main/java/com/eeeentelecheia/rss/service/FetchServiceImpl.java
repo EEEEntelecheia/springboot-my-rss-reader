@@ -56,7 +56,7 @@ public class FetchServiceImpl implements FetchService {
                 Article article = new Article();
                 article.setTitle(entry.getTitle());
                 article.setLink(link);
-                article.setPublished((Data) (entry.getPublishedDate() != null ? entry.getPublishedDate() : new Date()));
+                article.setPublished((entry.getPublishedDate() != null ? entry.getPublishedDate() : new Date()));
                 article.setSummary(entry.getDescription() != null ? entry.getDescription().getValue() : "");
                 article.setIsRead(false);
                 article.setFeedId(feed.getId());

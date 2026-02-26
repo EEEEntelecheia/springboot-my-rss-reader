@@ -1,6 +1,6 @@
 package com.eeeentelecheia.rss.pojo;
 
-import javax.xml.crypto.Data;
+import java.util.Date;
 
 public class Article {
     private Integer id;
@@ -8,7 +8,7 @@ public class Article {
     private String link;
     private String summary;
     private boolean isRead;
-    private Data published;
+    private Date published;
     private Integer feedId;
 
     public Integer getId() {
@@ -51,11 +51,11 @@ public class Article {
         this.isRead = isRead;
     }
 
-    public Data getPublished() {
+    public Date getPublished() {
         return published;
     }
 
-    public void setPublished(Data published) {
+    public void setPublished(Date published) {
         this.published = published;
     }
 
