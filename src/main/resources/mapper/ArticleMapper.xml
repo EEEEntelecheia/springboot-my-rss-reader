@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eeeentelecheia.rss.mapper.ArticleMapper">
+    <resultMap id="ArticleWithFeedMap" type="com.eeeentelecheia.rss.pojo.Article">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="link" column="link"/>
+        <result property="published" column="published"/>
+        <result property="summary" column="summary"/>
+        <result property="isRead" column="is_read"/>
+        <result property="feedId" column="feed_id"/>
+        <!-- 关联 Feed 对象 -->
+        <association property="feed" javaType="com.eeeentelecheia.rss.pojo.Feed">
+            <id property="id" column="f_id"/>
+            <result property="name" column="f_name"/>
+            <result property="url" column="f_url"/>
+        </association>
+    </resultMap>
+
+    <update id="createArticlesTable">
+        CREATE TABLE IF NOT EXISTS articles (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            title TEXT NOT NULL,
+            link TEXT NOT NULL UNIQUE,
+            summary TEXT,
+            is_read tinyint(1) NOT NULL default 0,
+            published DATETIME DEFAULT CURRENT_TIMESTAMP,
+            feed_id INTEGER,
+            FOREIGN KEY (feed_id) references feeds(id) ON DELETE CASCADE
+        )
+    </update>
+
+    <insert id="insert" parameterType="com.eeeentelecheia.rss.pojo.Article" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO articles (title, link, published, summary, is_read, feed_id)
+        VALUES (#{title}, #{link}, #{published}, #{summary}, #{isRead}, #{feedId})
+    </insert>
+
+    <insert id="batchInsert" parameterType="list">
+        INSERT INTO articles (title, link, published, summary, is_read, feed_id)
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.title}, #{item.link}, #{item.published}, #{item.summary}, #{item.isRead}, #{item.feedId})
+        </foreach>
+    </insert>
+
+    <select id="findByFeedId" resultType="com.eeeentelecheia.rss.pojo.Article">
+        SELECT * FROM articles
+        WHERE feed_id = #{feedId}
+        ORDER BY published DESC
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+    <select id="findAllWithFeed" resultMap="ArticleWithFeedMap">
+        SELECT
+            a.*,
+            f.id as f_id,
+            f.name as f_name,
+            f.url as f_url
+        FROM articles a
+                 LEFT JOIN feeds f ON a.feed_id = f.id
+        ORDER BY a.published DESC
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+    <select id="countAll" resultType="long">
+        SELECT COUNT(*) FROM articles
+    </select>
+
+    <select id="countByFeedId" resultType="long">
+        SELECT COUNT(*) FROM articles WHERE feed_id = #{feedId}
+    </select>
+
+    <update id="markAsRead">
+        UPDATE articles SET is_read = 1 WHERE id = #{id}
+    </update>
+</mapper>

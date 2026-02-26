@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eeeentelecheia.rss.mapper.FeedMapper">
+    <!-- 在 mapper 文件中 -->
+    <update id="createFeedsTable">
+        CREATE TABLE IF NOT EXISTS feeds (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            url TEXT NOT NULL UNIQUE,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        )
+    </update>
+
+    <resultMap id="BaseResultMap" type="com.eeeentelecheia.rss.pojo.Feed">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="url" column="url"/>
+        <result property="createdAt" column="created_at"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.eeeentelecheia.rss.pojo.Feed" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO feeds (name, url, created_at)
+        VALUES (#{name}, #{url}, #{createdAt})
+    </insert>
+
+    <select id="findById" resultMap="BaseResultMap">
+        SELECT * FROM feeds WHERE id = #{id}
+    </select>
+
+    <select id="findByUrl" resultMap="BaseResultMap">
+        SELECT * FROM feeds WHERE url = #{url}
+    </select>
+
+    <select id="findAll" resultMap="BaseResultMap">
+        SELECT * FROM feeds ORDER BY id DESC
+    </select>
+
+    <update id="update" parameterType="com.eeeentelecheia.rss.pojo.Feed">
+        UPDATE feeds
+        SET name = #{name}, url = #{url}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM feeds WHERE id = #{id}
+    </delete>
+
+    <select id="count" resultType="int">
+        SELECT COUNT(*) FROM feeds
+    </select>
+
+    <select id="countByUrl" resultType="int">
+        SELECT COUNT(*) FROM feeds
+        WHERE url = #{url}
+    </select>
+</mapper>
