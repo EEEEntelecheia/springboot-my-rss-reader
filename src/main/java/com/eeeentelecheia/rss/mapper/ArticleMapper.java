@@ -28,6 +28,9 @@ public interface ArticleMapper {
     // 获取总记录数
     long countAll();
 
+    // 检查文章是否存在
+    boolean existsByLink(@Param("link") String link);
+
     // 根据订阅源统计文章数
     long countByFeedId(@Param("feedId") Integer feedId);
 

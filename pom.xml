@@ -72,6 +72,13 @@
             <version>1.5.25</version>
         </dependency>
 
+        <!--Rome 库（Java 版 feedparser）-->
+        <dependency>
+            <groupId>com.rometools</groupId>
+            <artifactId>rome</artifactId>
+            <version>1.19.0</version>
+        </dependency>
+
     </dependencies>
 
 

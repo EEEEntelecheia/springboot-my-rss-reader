@@ -68,7 +68,12 @@
         SELECT COUNT(*) FROM articles
     </select>
 
-    <select id="countByFeedId" resultType="long">
+    <select id="countAll" resultType="long">
+        SELECT COUNT(*) FROM articles
+        WHERE link = #{link}
+    </select>
+
+    <select id="countByFeedId" resultType="boolean">
         SELECT COUNT(*) FROM articles WHERE feed_id = #{feedId}
     </select>
 

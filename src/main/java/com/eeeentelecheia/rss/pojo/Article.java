@@ -1,12 +1,14 @@
 package com.eeeentelecheia.rss.pojo;
 
+import javax.xml.crypto.Data;
+
 public class Article {
     private Integer id;
     private String title;
     private String link;
     private String summary;
     private boolean isRead;
-    private String published;
+    private Data published;
     private Integer feedId;
 
     public Integer getId() {
@@ -41,27 +43,27 @@ public class Article {
         this.summary = summary;
     }
 
-    public boolean isisRead() {
+    public boolean getIsRead() {
         return isRead;
     }
 
-    public void setisRead(boolean isRead) {
+    public void setIsRead(boolean isRead) {
         this.isRead = isRead;
     }
 
-    public String getpublished() {
+    public Data getPublished() {
         return published;
     }
 
-    public void setpublished(String published) {
+    public void setPublished(Data published) {
         this.published = published;
     }
 
-    public Integer getfeedId() {
+    public Integer getFeedId() {
         return feedId;
     }
 
-    public void setfeedId(Integer feedId) {
+    public void setFeedId(Integer feedId) {
         this.feedId = feedId;
     }
 

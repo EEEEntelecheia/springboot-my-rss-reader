@@ -7,7 +7,7 @@ public class Feed {
    private Integer id;
    private String name;
    private String url;
-   private String createdAt;
+   private Date createdAt;
 
     public Integer getId() {
         return id;
@@ -33,11 +33,11 @@ public class Feed {
         this.url = url;
     }
 
-    public String getcreatedAt() {
+    public Date getCreatedAt() {
         return createdAt;
     }
 
-    public void setcreatedAt(String createdAt) {
+    public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
 
